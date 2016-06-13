@@ -23,6 +23,11 @@ textarea {
     max-width: 280px;
 }
 
+span.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
 /* Bootstrap Overrides */
 .navbar-inverse{
     background-color: #ff4342;
@@ -75,6 +80,11 @@ h6,
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+h1, h2, h3 {
+    margin-top: 22px;
+    margin-bottom: 20px;
+}
+
 .form-group {
     margin-bottom: 20px;
 }
@@ -98,3 +108,4 @@ h6,
     -ms-border-radius: 9px;
     border-radius: 9px;
 }
+
