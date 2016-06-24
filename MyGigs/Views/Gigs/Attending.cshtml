@@ -1,8 +1,10 @@
 ﻿@model MyGigs.ViewModels.GigsViewModel
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Attending";
 }
+
+<h2>Attending</h2>
 
 <ul class="gigs">
     @foreach (var gig in Model.UpcomingGigs)
@@ -36,35 +38,3 @@
         </li>
     }
 </ul>
-
-@section scripts
-{
-    <script>
-        $(document).ready(function () {
-            $(".js-toggle-attendance").click(function (e) {
-                var button = $(e.target);
-                $.post("/api/attendances", { gigId: button.attr("data-gig-id") })
-                .success(function () {
-                    button
-                        .removeClass("btn-default")
-                        .addClass("btn-info")
-                        .text("Attending");
-                })
-                .fail(function () {
-                    alert("Something failed!");
-                });
-            });
-
-            $(".js-toggle-follow").click(function (e) {
-                var button = $(e.target);
-                $.post("/api/followings", { followeeId: button.attr("data-user-id") })
-                .success(function () {
-                    button.text("Following");
-                })
-                .fail(function () {
-                    alert("Something failed!");
-                });
-            });
-        });
-    </script>
-}
