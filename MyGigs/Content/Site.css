@@ -1,6 +1,7 @@
 ﻿body {
-    padding-top: 70px;
+    padding-top: 100px;
     padding-bottom: 20px;
+    font-size:17px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -27,6 +28,13 @@ span.field-validation-error {
     color: red;
     font-weight: bold;
 }
+
+.verticalOffset { margin-top: 2px; }
+.verticalOffset1 { margin-top: 5px; }
+.verticalOffset2 { margin-top: 10px; }
+.verticalOffset3 { margin-top: 20px; }
+.verticalOffset4 { margin-top: 40px; }
+.verticalOffset5 { margin-top: 80px; }
 
 /* Bootstrap Overrides */
 .navbar-inverse{
@@ -60,10 +68,6 @@ span.field-validation-error {
     font-weight: 700;
 }
 
-body {
-    font-size:17px;
-}
-
 body,
 h1,
 h2,
@@ -78,11 +82,6 @@ h6,
 .h5,
 .h6 {
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-h1, h2, h3 {
-    margin-top: 10px;
-    margin-bottom: 20px;
 }
 
 .form-group {
