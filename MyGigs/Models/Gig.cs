@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyGigs.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -39,7 +40,21 @@ namespace MyGigs.Models
         {
             IsCancelled = true;
 
-            var notification = new Notification(this, NotificationType.GigCancelled);
+            var notification = Notification.GigCancelled(this);
+
+            foreach (var attendee in Attendances.Select(a => a.Attendee))
+            {
+                attendee.Notify(notification);
+            }
+        }
+
+        public void Modify(GigFormViewModel veiwModel)
+        {
+            var notification = Notification.GigUpdated(this, DateTime, Venue);
+
+            Venue = veiwModel.Venue;
+            DateTime = veiwModel.GetDateTime();
+            GenreId = veiwModel.Genre;
 
             foreach (var attendee in Attendances.Select(a => a.Attendee))
             {
