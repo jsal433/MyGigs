@@ -233,8 +233,15 @@
     <Compile Include="Migrations\201606280157553_RenameIsCancelled.Designer.cs">
       <DependentUpon>201606280157553_RenameIsCancelled.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606280444013_AddNotification.cs" />
+    <Compile Include="Migrations\201606280444013_AddNotification.Designer.cs">
+      <DependentUpon>201606280444013_AddNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationType.cs" />
+    <Compile Include="Models\UserNotification.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\Following.cs" />
@@ -352,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606280157553_RenameIsCancelled.resx">
       <DependentUpon>201606280157553_RenameIsCancelled.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606280444013_AddNotification.resx">
+      <DependentUpon>201606280444013_AddNotification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
