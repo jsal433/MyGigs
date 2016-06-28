@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace MyGigs.Models
 {
@@ -7,7 +10,7 @@ namespace MyGigs.Models
     {
         public int Id { get; set; }
 
-        public bool IsCancelled { get; set; }
+        public bool IsCancelled { get; private set; }
 
         public ApplicationUser Artist { get; set; }
 
@@ -24,5 +27,24 @@ namespace MyGigs.Models
 
         [Required]
         public byte GenreId { get; set; }
+
+        public ICollection<Attendance> Attendances { get; private set; }
+
+        public Gig()
+        {
+            Attendances = new Collection<Attendance>();
+        }
+
+        public void Cancel()
+        {
+            IsCancelled = true;
+
+            var notification = new Notification(this, NotificationType.GigCancelled);
+
+            foreach (var attendee in Attendances.Select(a => a.Attendee))
+            {
+                attendee.Notify(notification);
+            }
+        }
     }
 }

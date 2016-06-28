@@ -8,8 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MyGigs.Models;
 using MyGigs.ViewModels;
+using MyGigs.Models;
 
 namespace MyGigs.Controllers
 {
