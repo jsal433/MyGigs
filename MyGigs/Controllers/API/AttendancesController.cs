@@ -8,32 +8,32 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace MyGigs.Controllers
+namespace MyGigs.Controllers.API
 {
     [Authorize]
-    public class FollowingsController : ApiController
+    public class AttendancesController : ApiController
     {
         private ApplicationDbContext _context;
 
-        public FollowingsController()
+        public AttendancesController()
         {
             _context = new ApplicationDbContext();
         }
 
         [HttpPost]
-        public IHttpActionResult Follow(FollowingDto dto)
+        public IHttpActionResult Attend(AttendanceDto dto)
         {
             var userId = User.Identity.GetUserId();
 
-            if (_context.Followings.Any(f => f.FolloweeId == userId && f.FollowerId == dto.FolloweeId))
-                return BadRequest("Following already exists");
+            if (_context.Attendances.Any(a => a.AttendeeId == userId && a.GigId == dto.GigId))
+                return BadRequest("The attendance already exists");
 
-            var following = new Following
+            var attendance = new Attendance
             {
-                FolloweeId = dto.FolloweeId,
-                FollowerId = userId
+                GigId = dto.GigId,
+                AttendeeId = userId
             };
-            _context.Followings.Add(following);
+            _context.Attendances.Add(attendance);
             _context.SaveChanges();
 
             return Ok();
