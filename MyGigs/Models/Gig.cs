@@ -22,7 +22,7 @@ namespace MyGigs.Models
 
         [Required]
         [StringLength(255)]
-        public String Venue { get; set; }
+        public string Venue { get; set; }
 
         public Genre Genre { get; set; }
 

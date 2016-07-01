@@ -9,6 +9,6 @@ namespace MyGigs.Models
 
         [Required]
         [StringLength(255)]
-        public String Name { get; set; }
+        public string Name { get; set; }
     }
 }
