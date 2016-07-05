@@ -38,30 +38,29 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/lib")
     @RenderSection("scripts", required: false)
 
     <script type="text/x-template" id="notifications-template">
-        <ul>
+        <ul class="notifications">
             <%
                 _.each(notifications, function(notification){
                     if(notification.type == 1){ %>
-                        <li><%= notification.gig.artist.name %> has canceled the gig at '<%= notification.gig.venue %>', at <%= notification.gig.dateTime %>.</li>
+                        <li><span class="highlight"><%= notification.gig.artist.name %></span> has canceled the gig at '<%= notification.gig.venue %>' at <%= moment(notification.gig.dateTime).format("D MMM HH:mm") %>.</li>
                     <% }
                     else if(notification.type == 2){ 
                         if(notification.originalVenue != notification.gig.venue){ %>
-                            <li><%= notification.gig.artist.name %> has changed the venue of the gig from '<%= notification.originalVenue %>' to '<%= notification.gig.venue %>'
+                            <li><span class="highlight"><%= notification.gig.artist.name %></span> has changed the venue of the gig from '<%= notification.originalVenue %>' to '<%= notification.gig.venue %>'
                         <% }
                         if(notification.originalDateTime != notification.gig.dateTime && notification.originalVenue != notification.gig.venue){ %>
-                            and the time has changed from <%= notification.originalDateTime %> to <%= notification.gig.dateTime %>.</li>
+                            and the time has changed from <%= moment(notification.originalDateTime).format("D MMM HH:mm") %> to <%= moment(notification.gig.dateTime).format("D MMM HH:mm") %>.</li>
                         <% }
                         else if(notification.originalDateTime != notification.gig.dateTime){ %>
-                            </li><li><%= notification.gig.artist.name %> has changed the time of the gig at '<%= notification.gig.venue %>' from <%= notification.originalDateTime %> to <%= notification.gig.dateTime %>.</li>
+                            </li><li><span class="highlight"><%= notification.gig.artist.name %></span> has changed the time of the gig at '<%= notification.gig.venue %>' from <%= moment(notification.originalDateTime).format("D MMM HH:mm") %> to <%= moment(notification.gig.dateTime).format("D MMM HH:mm") %>.</li>
                         <% }
                     }
                     else if(notification.type == 3){ %>
-                        <li><%= notification.gig.artist.name %> has created a gig, it is at '<%= notification.gig.venue %>', at <%= notification.gig.dateTime %>.</li>
+                        <li><span class="highlight"><%= notification.gig.artist.name %></span> has created a gig, it is at '<%= notification.gig.venue %>', at <%= moment(notification.gig.dateTime).format("D MMM HH:mm") %>.</li>
                     <% }
                 })
             %>
@@ -72,7 +71,7 @@
         $(document).ready(function () {
             $.getJSON("/api/notifications", function (notifications) {
                 if (notifications.length == 0)
-                    return;
+                    return; // TODO: Implement most recent notifications (can still view read notifications)
 
                 $(".js-notifications-count")
                     .text(notifications.length)
@@ -86,7 +85,15 @@
                         var compiled = _.template($("#notifications-template").html());
                         return compiled({ notifications: notifications });
                     },
-                    placement: "bottom"
+                    placement: "bottom",
+                    template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                }).on("shown.bs.popover", function () {
+                    $.post("/api/notifications/markAsRead")
+                    .success(function () {
+                        $(".js-notifications-count")
+                            .text("")
+                        .addClass("hide");
+                    })
                 });
             });
         });
